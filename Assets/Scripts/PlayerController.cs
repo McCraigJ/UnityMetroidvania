@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject bomb;
 
+    private bool canMove;
+
     private float ballCounter;
 
     private float dashRechargeCounter;
@@ -79,99 +81,110 @@ public class PlayerController : MonoBehaviour
     private Vector3 rightFacingScale = new Vector3(1f, 1f, 1f);
     private Vector3 leftFacingScale = new Vector3(-1f, 1f, 1f);
 
+    private PlayerAbilityTracker playerAbilityTracker;
+
     void Start()
     {
         //Application.targetFrameRate = 60;
+        playerAbilityTracker = GetComponent<PlayerAbilityTracker>();
+        canMove = true;
     }
 
     void Update()
     {
-        if (dashRechargeCounter > 0)
+        bool isTouchingGround = GetIsTouchingGround();
+
+        if (canMove)
         {
-            dashRechargeCounter -= Time.deltaTime;
-        }
 
-        if (Input.GetButtonDown("Fire2") && standing.activeSelf)
-        {
-            dashCounter = dashTime;
-            dashRechargeCounter = waitAfterDashing;
-
-            ShowAfterImage();
-        }
-
-        if (dashCounter > 0)
-        {
-            dashCounter -= Time.deltaTime;
-
-            playerRigidbody.velocity = new Vector2(dashSpeed * transform.localScale.x, playerRigidbody.velocity.y);
-
-            afterImageCounter -= Time.deltaTime;
-            if (afterImageCounter <= 0)
+            if (dashRechargeCounter > 0)
             {
+                dashRechargeCounter -= Time.deltaTime;
+            }
+
+            if (Input.GetButtonDown("Fire2") && standing.activeSelf && playerAbilityTracker.CanDash)
+            {
+                dashCounter = dashTime;
+                dashRechargeCounter = waitAfterDashing;
+
                 ShowAfterImage();
             }
 
-        }
-        else
-        {
-            if (MoveHorizontally(out float horizontalSpeed, out bool shouldFaceRight))
+            if (dashCounter > 0)
             {
-                FacePlayer(shouldFaceRight);
-            }
-        }
+                dashCounter -= Time.deltaTime;
 
-        bool isTouchingGround = GetIsTouchingGround();
+                playerRigidbody.velocity = new Vector2(dashSpeed * transform.localScale.x, playerRigidbody.velocity.y);
 
-
-        Jump(isTouchingGround);
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if (standing.activeSelf)
-            {
-                BulletController shot = Instantiate(shotToFire, shotPoint.position, shotPoint.rotation);
-                shot.SetMoveDirection(new Vector2(transform.localScale.x, 0f));
-
-                anim.SetTrigger("shotFired");
-            }
-            else if (ball.activeSelf)
-            {
-                Instantiate(bomb, bombPoint.position, bombPoint.rotation);
-            }
-
-        }
-
-        if (!ball.activeSelf)
-        {
-            if (Input.GetAxisRaw("Vertical") < -0.9f)
-            {
-                ballCounter -= Time.deltaTime;
-                if (ballCounter <= 0)
+                afterImageCounter -= Time.deltaTime;
+                if (afterImageCounter <= 0)
                 {
-                    ball.SetActive(true);
-                    standing.SetActive(false);
+                    ShowAfterImage();
+                }
+
+            }
+            else
+            {
+                if (MoveHorizontally(out float horizontalSpeed, out bool shouldFaceRight))
+                {
+                    FacePlayer(shouldFaceRight);
+                }
+            }
+
+            Jump(isTouchingGround);
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                if (standing.activeSelf)
+                {
+                    BulletController shot = Instantiate(shotToFire, shotPoint.position, shotPoint.rotation);
+                    shot.SetMoveDirection(new Vector2(transform.localScale.x, 0f));
+
+                    anim.SetTrigger("shotFired");
+                }
+                else if (ball.activeSelf && playerAbilityTracker.CanDropBomb)
+                {
+                    Instantiate(bomb, bombPoint.position, bombPoint.rotation);
+                }
+
+            }
+
+            if (!ball.activeSelf)
+            {
+                if (Input.GetAxisRaw("Vertical") < -0.9f && playerAbilityTracker.CanBecomBall)
+                {
+                    ballCounter -= Time.deltaTime;
+                    if (ballCounter <= 0)
+                    {
+                        ball.SetActive(true);
+                        standing.SetActive(false);
+                    }
+                }
+                else
+                {
+                    ballCounter = waitToBall;
                 }
             }
             else
             {
-                ballCounter = waitToBall;
+                if (Input.GetAxisRaw("Vertical") > 0.9f)
+                {
+                    ballCounter -= Time.deltaTime;
+                    if (ballCounter <= 0)
+                    {
+                        ball.SetActive(false);
+                        standing.SetActive(true);
+                    }
+                }
+                else
+                {
+                    ballCounter = waitToBall;
+                }
             }
         }
         else
         {
-            if (Input.GetAxisRaw("Vertical") > 0.9f)
-            {
-                ballCounter -= Time.deltaTime;
-                if (ballCounter <= 0)
-                {
-                    ball.SetActive(false);
-                    standing.SetActive(true);
-                }
-            }
-            else
-            {
-                ballCounter = waitToBall;
-            }
+            playerRigidbody.velocity = Vector2.zero;
         }
 
         if (standing.activeSelf)
@@ -184,6 +197,16 @@ public class PlayerController : MonoBehaviour
             ballAnim.SetFloat("speed", Mathf.Abs(playerRigidbody.velocity.x));
         }
 
+    }
+
+    public void SetAnimEnabled(bool isEnabled)
+    {
+        anim.enabled = isEnabled;
+    }
+
+    public void SetCanMove(bool playerCanMove)
+    {
+        canMove = playerCanMove;
     }
 
     private void ShowAfterImage()
@@ -212,7 +235,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump(bool isTouchingGround)
     {
-        if (Input.GetButtonDown("Jump") && (isTouchingGround || canDoubleJump))
+        if (Input.GetButtonDown("Jump") && (isTouchingGround || (canDoubleJump && playerAbilityTracker.CanDoubleJump)))
         {
             if (isTouchingGround)
             {

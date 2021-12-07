@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -15,9 +17,9 @@ TagManager:
   - Shot
   - Player
   - Destructible
-  - 
-  - 
-  - 
+  - Enemy
+  - Pickups
+  - TriggerZone
   - 
   - 
   - 
@@ -38,9 +40,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2567683313
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 281353445
+    locked: 0
   - name: Player
     uniqueID: 1161506009
+    locked: 0
+  - name: Door
+    uniqueID: 1463798351
     locked: 0

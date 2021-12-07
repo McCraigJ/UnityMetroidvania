@@ -133,10 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54c1f1e6c69e68f418732d642c6fe198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 20
+  bulletSpeed: 40
   bulletRigidbody: {fileID: 6607477347539423528}
   moveDir: {x: 1, y: 0}
   impactEffect: {fileID: 4087990830954945092, guid: 643ccc6ce797de34ba7b986b0410dd57, type: 3}
+  damageAmount: 1
 --- !u!50 &6607477347539423528
 Rigidbody2D:
   serializedVersion: 4
