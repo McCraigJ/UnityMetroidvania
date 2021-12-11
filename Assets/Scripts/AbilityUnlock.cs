@@ -47,7 +47,7 @@ public class AbilityUnlock : MonoBehaviour
 
             if (unlockBecomeBall)
             {
-                playerAbilityTracker.CanBecomBall = true;
+                playerAbilityTracker.CanBecomeBall = true;
             }
 
             if (unlockDropBomb)

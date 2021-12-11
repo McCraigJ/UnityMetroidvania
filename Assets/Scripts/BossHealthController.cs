@@ -25,6 +25,11 @@ public class BossHealthController : MonoBehaviour
         bossHealthSlider.value = currentHealth;
     }
 
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;

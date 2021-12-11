@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
     {
         bool isTouchingGround = GetIsTouchingGround();
 
-        if (canMove)
+        if (canMove && Time.timeScale != 0)
         {
 
             if (dashRechargeCounter > 0)
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
 
             if (!ball.activeSelf)
             {
-                if (Input.GetAxisRaw("Vertical") < -0.9f && playerAbilityTracker.CanBecomBall)
+                if (Input.GetAxisRaw("Vertical") < -0.9f && playerAbilityTracker.CanBecomeBall)
                 {
                     ballCounter -= Time.deltaTime;
                     if (ballCounter <= 0)

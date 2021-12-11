@@ -80,7 +80,7 @@ public class PlayerHealthController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            
+
             currentHealth = 0;
 
             RespawnController.instance.Respawn();
@@ -105,4 +105,6 @@ public class PlayerHealthController : MonoBehaviour
         Mathf.Clamp(currentHealth, 0, maxHealth);
         UIController.instance.UpdateHealth(currentHealth, maxHealth);
     }
+
+    public int GetCurrentHealth() => currentHealth;
 }

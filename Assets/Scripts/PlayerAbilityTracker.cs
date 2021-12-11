@@ -21,11 +21,11 @@ public class PlayerAbilityTracker : MonoBehaviour
     }
 
     [SerializeField]
-    private bool canBecomBall;
-    public bool CanBecomBall
+    private bool canBecomeBall;
+    public bool CanBecomeBall
     {
-        get => canBecomBall;
-        set { canBecomBall = value; }
+        get => canBecomeBall;
+        set { canBecomeBall = value; }
     }
 
     [SerializeField]

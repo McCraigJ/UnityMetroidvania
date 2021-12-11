@@ -108,10 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9b6ec932f2caf4cab7907dae296ed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDoubleJump: 1
-  canDash: 1
-  canBecomBall: 1
-  canDropBomb: 1
+  canDoubleJump: 0
+  canDash: 0
+  canBecomBall: 0
+  canDropBomb: 0
 --- !u!114 &5461002046727772075
 MonoBehaviour:
   m_ObjectHideFlags: 0
