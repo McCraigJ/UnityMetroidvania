@@ -20,6 +20,7 @@ public class BossBattle : MonoBehaviour
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform shotPoint;
     [SerializeField] private GameObject winObjects;
+    [SerializeField] private string bossRef;
 
     private CameraController mainCamera;
     private float activeCounter;
@@ -39,7 +40,7 @@ public class BossBattle : MonoBehaviour
 
         shotCounter = timeBetweenShots1;
 
-        //bossTransform.position = spawnPoints[0].position;
+        AudioManager.instance.PlayBossMusic();
     }
 
     // Update is called once per frame
@@ -173,6 +174,9 @@ public class BossBattle : MonoBehaviour
                 }
                 mainCamera.enabled = true;
                 gameObject.SetActive(false);
+                AudioManager.instance.PlayLevelMusic();
+
+                PlayerPrefs.SetInt(bossRef, 1);
             }
         }
     }

@@ -11,15 +11,14 @@ public class CameraController : MonoBehaviour
     private float halfHeight;
     private float halfWidth;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
         halfHeight = Camera.main.orthographicSize;
         halfWidth = halfHeight * Camera.main.aspect;
+        AudioManager.instance.PlayLevelMusic();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (player != null)

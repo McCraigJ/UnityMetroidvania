@@ -32,27 +32,30 @@ public class AbilityUnlock : MonoBehaviour
         {
             PlayerAbilityTracker playerAbilityTracker = collision.GetComponentInParent<PlayerAbilityTracker>();
 
-            
-
             if (unlockDoubleJump)
             {
                 playerAbilityTracker.CanDoubleJump = true;
+
+                PlayerPrefs.SetInt("DoubleJumpUnlocked", 1);
             }
 
             if (unlockDash)
             {
                 playerAbilityTracker.CanDash = true;
+                PlayerPrefs.SetInt("DashUnlocked", 1);
 
             }
 
             if (unlockBecomeBall)
             {
                 playerAbilityTracker.CanBecomeBall = true;
+                PlayerPrefs.SetInt("BallModeUnlocked", 1);
             }
 
             if (unlockDropBomb)
             {
                 playerAbilityTracker.CanDropBomb = true;
+                PlayerPrefs.SetInt("DropBombUnlocked", 1);
             }
 
             Instantiate(pickupEffect, transform.position, transform.rotation);
@@ -66,6 +69,8 @@ public class AbilityUnlock : MonoBehaviour
             Destroy(unlockMessageText.transform.parent.gameObject, 5f);
 
             Destroy(gameObject);
+
+            AudioManager.instance.PlaySFX(AudioSfx.PickupGem);
 
         }
     }

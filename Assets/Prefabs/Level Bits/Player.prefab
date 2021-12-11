@@ -110,8 +110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canDoubleJump: 0
   canDash: 0
-  canBecomBall: 0
-  canDropBomb: 0
+  canBecomeBall: 1
+  canDropBomb: 1
 --- !u!114 &5461002046727772075
 MonoBehaviour:
   m_ObjectHideFlags: 0

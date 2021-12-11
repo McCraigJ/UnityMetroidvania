@@ -32,7 +32,7 @@ public class BombController : MonoBehaviour
         {
             if (explosion != null)
             {
-                Instantiate(explosion, transform.position, Quaternion.identity);                
+                Instantiate(explosion, transform.position, Quaternion.identity);
             }
 
             Destroy(gameObject);
@@ -57,6 +57,8 @@ public class BombController : MonoBehaviour
                     enemyHealthController.DamageEnemy(damageAmount);
                 }
             }
+
+            AudioManager.instance.PlaySFXAdjusted(AudioSfx.Explode);
         }
     }
 }

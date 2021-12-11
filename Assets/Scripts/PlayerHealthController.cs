@@ -38,7 +38,6 @@ public class PlayerHealthController : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        UIController.instance.UpdateHealth(currentHealth, maxHealth);
     }
 
     private void Update()
@@ -83,11 +82,15 @@ public class PlayerHealthController : MonoBehaviour
 
             currentHealth = 0;
 
+            AudioManager.instance.PlaySFX(AudioSfx.PlayerDeath);
+
             RespawnController.instance.Respawn();
         }
         else
         {
             invincibilityCounter = invincibilityLength;
+
+            AudioManager.instance.PlaySFXAdjusted(AudioSfx.PlayerHurt);
         }
 
         UIController.instance.UpdateHealth(currentHealth, maxHealth);
@@ -107,4 +110,5 @@ public class PlayerHealthController : MonoBehaviour
     }
 
     public int GetCurrentHealth() => currentHealth;
+    public int GetMaxHealth() => maxHealth;
 }

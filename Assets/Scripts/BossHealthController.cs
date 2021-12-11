@@ -38,6 +38,11 @@ public class BossHealthController : MonoBehaviour
             currentHealth = 0;
 
             boss.EndBattle();
+
+            AudioManager.instance.PlaySFX(AudioSfx.BossDeath);
+        } else
+        {
+            AudioManager.instance.PlaySFX(AudioSfx.BossImpact);
         }
 
         bossHealthSlider.value = currentHealth;

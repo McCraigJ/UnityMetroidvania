@@ -36,6 +36,11 @@ public class UIController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        //UpdateHealth(PlayerHealthController.instance.GetCurrentHealth(), PlayerHealthController.instance.GetMaxHealth());
+    }
+
     private void Update()
     {
         if (isFadingToBlack)

@@ -69,6 +69,11 @@ public class DoorController : MonoBehaviour
 
         ResetAfterUseDoor();
 
+        PlayerPrefs.SetString("ContinueLevel", levelToLoad);
+        PlayerPrefs.SetFloat("PosX", exitPoint.position.x);
+        PlayerPrefs.SetFloat("PosY", exitPoint.position.y);
+        PlayerPrefs.SetFloat("PosZ", exitPoint.position.z);
+
     }
 
     private void ResetAfterUseDoor()

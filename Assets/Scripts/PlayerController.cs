@@ -108,6 +108,8 @@ public class PlayerController : MonoBehaviour
                 dashRechargeCounter = waitAfterDashing;
 
                 ShowAfterImage();
+
+                AudioManager.instance.PlaySFXAdjusted(AudioSfx.PlayerDash);
             }
 
             if (dashCounter > 0)
@@ -120,6 +122,7 @@ public class PlayerController : MonoBehaviour
                 if (afterImageCounter <= 0)
                 {
                     ShowAfterImage();
+
                 }
 
             }
@@ -141,10 +144,14 @@ public class PlayerController : MonoBehaviour
                     shot.SetMoveDirection(new Vector2(transform.localScale.x, 0f));
 
                     anim.SetTrigger("shotFired");
+
+                    AudioManager.instance.PlaySFXAdjusted(AudioSfx.PlayerShoot);
                 }
                 else if (ball.activeSelf && playerAbilityTracker.CanDropBomb)
                 {
                     Instantiate(bomb, bombPoint.position, bombPoint.rotation);
+
+                    AudioManager.instance.PlaySFXAdjusted(AudioSfx.PlayerMine);
                 }
 
             }
@@ -158,6 +165,8 @@ public class PlayerController : MonoBehaviour
                     {
                         ball.SetActive(true);
                         standing.SetActive(false);
+
+                        AudioManager.instance.PlaySFX(AudioSfx.PlayerBall);
                     }
                 }
                 else
@@ -174,6 +183,7 @@ public class PlayerController : MonoBehaviour
                     {
                         ball.SetActive(false);
                         standing.SetActive(true);
+                        AudioManager.instance.PlaySFX(AudioSfx.PlayerFromBall);
                     }
                 }
                 else
@@ -240,11 +250,13 @@ public class PlayerController : MonoBehaviour
             if (isTouchingGround)
             {
                 canDoubleJump = true;
+                AudioManager.instance.PlaySFXAdjusted(AudioSfx.PlayerJump);
             }
             else
             {
                 anim.SetTrigger("doubleJump");
                 canDoubleJump = false;
+                AudioManager.instance.PlaySFXAdjusted(AudioSfx.PlayerDoubleJump);
             }
 
             playerRigidbody.velocity = new Vector2(0, jumpForce);
